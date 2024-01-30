@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTodo = exports.getTodos = exports.createTodo = void 0;
+exports.deleteTodo = exports.updateTodo = exports.getTodos = exports.createTodo = void 0;
 const todo_1 = require("../models/todo");
 const todos = [];
 const createTodo = (req, res, next) => {
@@ -38,7 +38,7 @@ const updateTodo = (req, res, next) => {
         const updatedTask = req.body.task;
         const todoIndex = todos.findIndex(todo => todo.id === todoId);
         if (todoIndex < 0) {
-            throw new Error('Could not find todo');
+            throw new Error('Could not find todo with that id');
         }
         todos[todoIndex] = new todo_1.Todo(todos[todoIndex].id, updatedTask);
         res.status(201).json({
@@ -51,3 +51,21 @@ const updateTodo = (req, res, next) => {
     }
 };
 exports.updateTodo = updateTodo;
+const deleteTodo = (req, res, next) => {
+    try {
+        const todoId = req.params.id;
+        const todoIndex = todos.findIndex(todo => todo.id === todoId);
+        if (todoIndex < 0) {
+            throw new Error('Could not find todo with that id');
+        }
+        // Starts at todoIndex and removes 1 item
+        todos.splice(todoIndex, 1);
+        res.status(201).json({
+            message: 'Successfully deleted todo'
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+};
+exports.deleteTodo = deleteTodo;
