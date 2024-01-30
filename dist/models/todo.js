@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Todo = void 0;
+// JSON file model
 class Todo {
-    constructor(id, text) {
+    constructor(id, task) {
         this.id = id;
-        this.text = text;
+        this.task = task;
     }
 }
 exports.Todo = Todo;
